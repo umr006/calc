@@ -75,7 +75,7 @@ void pop_stack(list_t **stack);
 int priority_op(list_t* tmp, int priority);
 void postfix_notation(list_t *list, list_t **res);
 void reverse_stack(list_t **stack, double x);
-void peek(list_t** stack, list_t* peek_elem);
+void delete_stack(list_t** stack, list_t* elem);
 void bi_op_calc(list_t** stack, list_t* a, list_t* b, list_t* c);
 void un_op_calc(list_t** stack, list_t *a, list_t *b);
 void calculate(list_t** stack);        
@@ -107,11 +107,16 @@ int main() {
     list_t* list = NULL;
     list_t *res = NULL;
     char str[BUFF] = "cos(2)";
+    // double res = 0;
+    // calc_proc(str, 0, &res);
+    // printf("%lf\n", res);
     parsing(str, &list);
     postfix_notation(list, &res);
     reverse_stack(&res, 0);
     calculate(&res);
     output_list(res);
+    free_list(list);
+    free_list(res);
 }
 
 void calc_proc(char* str, double value_x, double *result) {
@@ -605,26 +610,25 @@ void reverse_stack(list_t **stack, double x) {
       (*stack)->type = number;
       (*stack)->value = x;
     }
-    create_push_stack(&stack_rev, (*stack)->value, (*stack)->priority,
-                          (*stack)->type);
+    create_push_stack(&stack_rev, (*stack)->value, (*stack)->priority,(*stack)->type);
     pop_stack(stack);
   }
   *stack = stack_rev;
 }
 
-void peek(list_t** stack, list_t* peek_elem) {
+void delete_stack(list_t** stack, list_t* elem) {
     list_t *tmp;
     tmp = *stack;
-    if (*stack == peek_elem) {
+    if (*stack == elem) {
         tmp = (*stack)->next;
         free(*stack);
         *stack = tmp;
     } else {
-        while (tmp->next != peek_elem) {
+        while (tmp->next != elem) {
             tmp = tmp->next;
         }
-        tmp->next = peek_elem->next;
-        free(peek_elem);
+        tmp->next = elem->next;
+        free(elem);
     }
 }
 
@@ -649,8 +653,8 @@ void bi_op_calc(list_t** stack, list_t* a, list_t* b, list_t* c) {
     a->priority = 0;
     a->type = number;
     a->value = res;
-    peek(stack, c);
-    peek(stack, b);
+    delete_stack(stack, c);
+    delete_stack(stack, b);
 }
 
 void un_op_calc(list_t** stack, list_t *a, list_t *b) {
@@ -682,7 +686,7 @@ void un_op_calc(list_t** stack, list_t *a, list_t *b) {
     a->value = res;
     a->priority = 0;
     a->type = number;
-    peek(stack, b);
+    delete_stack(stack, b);
 }
 
 void calculate(list_t** stack) {
