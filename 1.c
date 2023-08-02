@@ -104,25 +104,39 @@ void output_list(list_t *head) {
 }
 
 int main() {
-    list_t* list = NULL;
-    list_t *res = NULL;
     char str[BUFF] = "cos(2)";
-    // double res = 0;
-    // calc_proc(str, 0, &res);
-    // printf("%lf\n", res);
-    parsing(str, &list);
-    postfix_notation(list, &res);
-    reverse_stack(&res, 0);
-    calculate(&res);
-    output_list(res);
-    free_list(list);
-    free_list(res);
+    double res = 0;
+    calc_proc(str, 0, &res);
+    printf("%lf\n", res);
+    
+    
+    
+//     // parsing(str, &list);
+//     // postfix_notation(list, &res);
+//     // reverse_stack(&res, 0);
+//     // calculate(&res);
+//     // output_list(res);
+//     // free_list(list);
+//     // free_list(res);
 }
 
 void calc_proc(char* str, double value_x, double *result) {
     value_x = 1;
+    // char calc_str[BUFF];
+    // strcpy(str, calc_str);
+    // list_t* list = NULL;
+    // list_t* res = NULL;
+    // input_check(str);
+    // parsing(str, &list);
+    // postfix_notation(list, &res);
+    // reverse_stack(&res, 0);
+    // calculate(&res);
+    // *result = res->value;
+    // free_list(list);
+    // free_list(res);
+
+    value_x = 1;
     char calc_str[BUFF];
-    strcpy(str, calc_str);
     list_t* list = NULL;
     list_t* res = NULL;
     input_check(str);
@@ -133,6 +147,19 @@ void calc_proc(char* str, double value_x, double *result) {
     *result = res->value;
     free_list(list);
     free_list(res);
+
+    // list_t* list = NULL;
+    // list_t *res = NULL;
+    // // double res = 0;
+    // // calc_proc(str, 0, &res);
+    // // printf("%lf\n", res);
+    // parsing(str, &list);
+    // postfix_notation(list, &res);
+    // reverse_stack(&res, 0);
+    // calculate(&res);
+    // *result = res->value;
+    // free_list(list);
+    // free_list(res);
 }
 
 void free_list(list_t *top) {
